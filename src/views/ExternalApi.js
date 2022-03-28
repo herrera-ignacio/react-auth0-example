@@ -60,7 +60,8 @@ export const ExternalApiComponent = () => {
       const token = await getAccessTokenSilently();
       const idToken = await getIdTokenClaims();
 
-      const response = await fetch(`${apiOrigin}/api/external`, {
+      const response = await fetch(`${apiOrigin}/auth/onSuccess`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "X-OIDC": idToken.__raw,
@@ -72,7 +73,7 @@ export const ExternalApiComponent = () => {
       setState({
         ...state,
         showResult: true,
-        apiMessage: responseData,
+        apiMessage: responseData.data,
       });
     } catch (error) {
       setState({
